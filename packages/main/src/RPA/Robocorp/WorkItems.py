@@ -4,6 +4,7 @@ import json
 import logging
 import os
 from abc import ABC, abstractmethod
+from enum import Enum
 from pathlib import Path
 from shutil import copy2
 from typing import Type, Any, Optional, Union, Dict, List, Tuple
@@ -22,6 +23,13 @@ from .utils import JSONType, url_join, json_dumps, is_json_equal, truncate, reso
 UNDEFINED = object()  # Undefined default value
 
 
+class State(Enum):
+    """Work item state."""
+
+    SUCCESS = "success"
+    FAILURE = "failure"
+
+
 class EmptyQueue(IndexError):
     """Raised when trying to load an input item and none available."""
 
@@ -30,8 +38,13 @@ class BaseAdapter(ABC):
     """Abstract base class for work item adapters."""
 
     @abstractmethod
-    def get_input(self) -> str:
-        """Get next work item ID from input queue."""
+    def reserve_input(self) -> str:
+        """Get next work item ID from input queue, and reserve it."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def release_input(self, item_id: str, state: State):
+        """Set the state for an (input) work item, and release it."""
         raise NotImplementedError
 
     @abstractmethod
@@ -81,8 +94,11 @@ class RobocorpAdapter(BaseAdapter):
     * RC_API_PROCESS_HOST:      Process API hostname
     * RC_API_PROCESS_TOKEN:     Process API access token
 
-    * RC_WORKSPACE_ID:          Control room worksapce ID
+    * RC_WORKSPACE_ID:          Control room workspace ID
     * RC_PROCESS_ID:            Control room process ID
+    * RC_PROCESS_RUN_ID:        Control room process run ID
+    * RC_ROBOT_RUN_ID:          Control room robot run ID
+
 
     * RC_WORKITEM_ID:           Control room work item ID (input)
     """
@@ -99,19 +115,51 @@ class RobocorpAdapter(BaseAdapter):
         #: Current execution IDs
         self.workspace_id = required_env("RC_WORKSPACE_ID")
         self.process_id = required_env("RC_PROCESS_ID")
+        # TODO: Check if these are correct:
+        self.process_run_id = required_env("RC_PROCESS_RUN_ID")
+        self.robot_run_id = required_env("RC_ROBOT_RUN_ID")
 
-        #: Input queue of work items
-        #: NOTE: Only one input item currently supported, through runtime env
-        self.input_queue = [required_env("RC_WORKITEM_ID")]
+        #: Initial work item from environment
+        self.workitem_id = required_env("RC_WORKITEM_ID")
 
-    def get_input(self) -> str:
-        try:
-            return self.input_queue.pop()
-        except IndexError as err:
-            raise EmptyQueue("No work items in input queue") from err
+        #: Iterator of input queue
+        self._input_queue = self._iter_input_queue()
+
+    def reserve_input(self) -> str:
+        return next(self._input_queue)
+
+    def _iter_input_queue(self):
+        # Handle item defined in environment first
+        yield self.workitem_id
+
+        # Loop through input queue while items avialable
+        while True:
+            url = self.process_url(
+                "runs",
+                self.process_run_id,
+                "robotRuns",
+                self.robot_run_id,
+                "reserve-next-work-item",
+            )
+
+            response = requests.post(url, headers=self.process_headers)
+            self.handle_error(response)
+
+            fields = response.json()
+            item_id = fields["workItemId"]
+
+            if not item_id:
+                raise EmptyQueue("No work items in input queue")
+
+            yield item_id
+
+    def release_input(self, item_id: str, state: State):
+        # TODO: Call the release endpoint here
+        # NB: state.value to access string value
+        raise NotImplementedError
 
     def create_output(self, parent_id: str, payload: Optional[JSONType] = None) -> str:
-        url = self.process_url(parent_id, "output")
+        url = self.process_url("work-items", parent_id, "output")
         logging.info("Creating output item: %s", url)
 
         data = json_dumps({"payload": payload})
@@ -248,7 +296,7 @@ class RobocorpAdapter(BaseAdapter):
     def process_headers(self):
         return {"Authorization": f"Bearer {self.process_token}"}
 
-    def process_url(self, item_id: str, *parts: str):
+    def process_url(self, *parts: str):
         return url_join(
             self.process_host,
             "process-v1",
@@ -256,8 +304,6 @@ class RobocorpAdapter(BaseAdapter):
             self.workspace_id,
             "processes",
             self.process_id,
-            "work-items",
-            item_id,
             *parts,
         )
 
@@ -309,6 +355,7 @@ class FileAdapter(BaseAdapter):
         self.index: int = 0
 
     def _get_item(self, item_id: str) -> Tuple[str, Dict[str, Any]]:
+        # Use index of work item in inputs/outputs lists as its id directly
         idx = int(item_id)
         if idx < len(self.inputs):
             return "input", self.inputs[idx]
@@ -317,7 +364,7 @@ class FileAdapter(BaseAdapter):
         else:
             raise ValueError(f"Unknown work item ID: {item_id}")
 
-    def get_input(self) -> str:
+    def reserve_input(self) -> str:
         try:
             idx = self.index
             _ = self.inputs[idx]
@@ -325,6 +372,10 @@ class FileAdapter(BaseAdapter):
             return str(idx)
         except IndexError as err:
             raise EmptyQueue("No work items in input queue") from err
+
+    def release_input(self, item_id: str, state: State):
+        # TODO: Define what happens with items in file, nothing?
+        raise NotImplementedError
 
     def create_output(self, parent_id: str, payload: Optional[JSONType] = None) -> str:
         del parent_id
@@ -441,10 +492,12 @@ class WorkItem:
     def __init__(self, adapter, item_id=None, parent_id=None):
         #: Adapter for loading/saving content
         self.adapter = adapter
-        #: This item's ID, if created
+        #: This item's and/or parent's ID
         self.id: Optional[str] = item_id
         self.parent_id: Optional[str] = parent_id
         assert self.id is not None or self.parent_id is not None
+        #: Item's state on release, can only be set once
+        self.state: Optional[State] = None
         #: Remote JSON payload, and queued changes
         self._payload: JSONType = {}
         self._payload_cache: JSONType = {}
@@ -815,7 +868,15 @@ class WorkItems:
         **NOTE**: Currently only one input work item per execution is supported
                   by Control Room.
         """
-        item_id = self.adapter.get_input()
+        # TODO: Here we implicitly release the previous input as successful,
+        #       if the user didn't call "set work item state". Is that ok?
+        if self.inputs:
+            previous = self.inputs[-1]
+            if previous.state is None and previous.id is not None:
+                self.adapter.release_input(previous.id, State.SUCCESS)
+                previous.state = State.SUCCESS
+
+        item_id = self.adapter.reserve_input()
 
         item = WorkItem(item_id=item_id, parent_id=None, adapter=self.adapter)
         item.load()
@@ -823,6 +884,28 @@ class WorkItems:
         self.inputs.append(item)
         self.current = item
         return self.current
+
+    @keyword
+    def set_work_item_state(self, state: State):
+        """Set the result state for the current input work item,
+        and release it.
+
+        After this has been called, no more output work items can be created
+        unless a new input work item has been loaded.
+        """
+        # TODO: Check if above is true
+        # TODO: Should the released item not be "self.current" anymore?
+        # TODO: Set state automatically for previous input item, instead of current?
+        #       Is that a bit too "magical" and hard to understand?
+        if self.current.parent_id is not None:
+            raise ValueError("Unable to set state for output work item")
+
+        if not isinstance(state, State):
+            state = State(state)
+
+        assert self.current.id is not None  # Should never happen
+        self.adapter.release_input(self.current.id, state)
+        self.current.state = state
 
     @keyword
     def create_output_work_item(self):
