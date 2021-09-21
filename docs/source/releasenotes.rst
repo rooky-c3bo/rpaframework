@@ -4,6 +4,19 @@ Release notes
 Upcoming release
 ----------------
 
+11.2.1
+------
+
+- Library **RPA.Robocorp.WorkItems**: Handle payloads with non-ascii characters
+- Library **RPA.Dialogs**: Date ISO format for ``Add Date Input`` keyword
+- Library **RPA.Desktop**: Always write unicode with ``Type text``
+
+11.2.0
+------
+
+- Library **RPA.Dialogs**: ``Add Date Input`` keyword
+- New library **RPA.Robocorp.Process**: Library support for Control Room Process API
+
 11.1.3
 ------
 

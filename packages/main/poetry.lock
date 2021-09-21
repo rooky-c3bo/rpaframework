@@ -20,7 +20,7 @@ python-versions = "*"
 
 [[package]]
 name = "astroid"
-version = "2.7.3"
+version = "2.8.0"
 description = "An abstract syntax tree for Python with inference support."
 category = "dev"
 optional = false
@@ -29,7 +29,7 @@ python-versions = "~=3.6"
 [package.dependencies]
 lazy-object-proxy = ">=1.4.0"
 typed-ast = {version = ">=1.4.0,<1.5", markers = "implementation_name == \"cpython\" and python_version < \"3.8\""}
-typing-extensions = {version = ">=3.7.4", markers = "python_version < \"3.8\""}
+typing-extensions = {version = ">=3.10", markers = "python_version < \"3.10\""}
 wrapt = ">=1.11,<1.13"
 
 [[package]]
@@ -144,14 +144,14 @@ uvloop = ["uvloop (>=0.15.2)"]
 
 [[package]]
 name = "boto3"
-version = "1.18.42"
+version = "1.18.44"
 description = "The AWS SDK for Python"
 category = "main"
 optional = true
 python-versions = ">= 3.6"
 
 [package.dependencies]
-botocore = ">=1.21.42,<1.22.0"
+botocore = ">=1.21.44,<1.22.0"
 jmespath = ">=0.7.1,<1.0.0"
 s3transfer = ">=0.5.0,<0.6.0"
 
@@ -160,7 +160,7 @@ crt = ["botocore[crt] (>=1.21.0,<2.0a0)"]
 
 [[package]]
 name = "botocore"
-version = "1.21.42"
+version = "1.21.44"
 description = "Low-level, data-driven core of boto 3."
 category = "main"
 optional = true
@@ -211,7 +211,7 @@ python-versions = "*"
 
 [[package]]
 name = "charset-normalizer"
-version = "2.0.5"
+version = "2.0.6"
 description = "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet."
 category = "main"
 optional = false
@@ -898,23 +898,24 @@ python-versions = ">=3.5"
 
 [[package]]
 name = "pylint"
-version = "2.10.2"
+version = "2.11.1"
 description = "python code static checker"
 category = "dev"
 optional = false
 python-versions = "~=3.6"
 
 [package.dependencies]
-astroid = ">=2.7.2,<2.8"
+astroid = ">=2.8.0,<2.9"
 colorama = {version = "*", markers = "sys_platform == \"win32\""}
 isort = ">=4.2.5,<6"
 mccabe = ">=0.6,<0.7"
 platformdirs = ">=2.2.0"
 toml = ">=0.7.1"
+typing-extensions = {version = ">=3.10.0", markers = "python_version < \"3.10\""}
 
 [[package]]
 name = "pynput-robocorp-fork"
-version = "3.0.0"
+version = "4.0.0"
 description = "Monitor and control user input devices"
 category = "main"
 optional = false
@@ -950,18 +951,6 @@ pyobjc-core = ">=7.3"
 name = "pyobjc-framework-quartz"
 version = "7.3"
 description = "Wrappers for the Quartz frameworks on macOS"
-category = "main"
-optional = false
-python-versions = ">=3.6"
-
-[package.dependencies]
-pyobjc-core = ">=7.3"
-pyobjc-framework-Cocoa = ">=7.3"
-
-[[package]]
-name = "pyobjc-framework-webkit"
-version = "7.3"
-description = "Wrappers for the framework WebKit on macOS"
 category = "main"
 optional = false
 python-versions = ">=3.6"
@@ -1131,17 +1120,6 @@ python-versions = "*"
 six = ">=1.10.0"
 
 [[package]]
-name = "pythonnet"
-version = "2.5.2"
-description = ".Net and Mono integration for Python"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-pycparser = "*"
-
-[[package]]
 name = "pytz"
 version = "2021.1"
 description = "World timezone definitions, modern and historical"
@@ -1160,11 +1138,6 @@ python-versions = "*"
 [package.dependencies]
 importlib_resources = {version = "*", markers = "python_version < \"3.7\""}
 proxy_tools = "*"
-pyobjc-core = {version = "*", markers = "sys_platform == \"darwin\""}
-pyobjc-framework-Cocoa = {version = "*", markers = "sys_platform == \"darwin\""}
-pyobjc-framework-WebKit = {version = "*", markers = "sys_platform == \"darwin\""}
-PyQt5 = {version = "*", markers = "sys_platform == \"openbsd6\""}
-pythonnet = {version = "*", markers = "sys_platform == \"win32\""}
 
 [package.extras]
 cef = ["cefpython3"]
@@ -1280,7 +1253,7 @@ python-versions = "*"
 
 [[package]]
 name = "robocorp-dialog"
-version = "0.2.3"
+version = "0.4.0"
 description = "Dialog for querying user input"
 category = "main"
 optional = false
@@ -1289,7 +1262,7 @@ python-versions = ">=3.6.2,<4.0.0"
 [package.dependencies]
 PyQt5 = {version = ">=5.15.2,<6.0.0", markers = "sys_platform == \"linux\""}
 PyQtWebEngine = {version = ">=5.15.2,<6.0.0", markers = "sys_platform == \"linux\""}
-pywebview = ">=3.5,<4.0"
+pywebview = {version = ">=3.5,<4.0", markers = "sys_platform == \"linux\""}
 
 [[package]]
 name = "robotframework"
@@ -1405,14 +1378,14 @@ webdrivermanager = ">=0.10.0,<0.11.0"
 
 [[package]]
 name = "rpaframework-dialogs"
-version = "0.3.2"
+version = "0.4.1"
 description = "Dialogs library of RPA Framework"
 category = "main"
 optional = false
 python-versions = ">=3.6.2,<4.0.0"
 
 [package.dependencies]
-robocorp-dialog = ">=0.2.3,<0.3.0"
+robocorp-dialog = ">=0.4.0,<0.5.0"
 robotframework = ">=4.0.0,<4.0.1 || >4.0.1,<5.0.0"
 rpaframework-core = ">=6.1.0,<7.0.0"
 
@@ -1725,7 +1698,7 @@ playwright = ["robotframework-browser"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.6.2"
-content-hash = "f1110b82869155419ebe5506938ad536168a66fa41257e28de10f682c2743be1"
+content-hash = "dc05e3c80f06c97aa9a2a0b821d93a20210aa87c5feeac2e7af996d1877bedc6"
 
 [metadata.files]
 amazon-textract-response-parser = [
@@ -1737,8 +1710,8 @@ appdirs = [
     {file = "appdirs-1.4.4.tar.gz", hash = "sha256:7d5d0167b2b1ba821647616af46a749d1c653740dd0d2415100fe26e27afdf41"},
 ]
 astroid = [
-    {file = "astroid-2.7.3-py3-none-any.whl", hash = "sha256:dc1e8b28427d6bbef6b8842b18765ab58f558c42bb80540bd7648c98412af25e"},
-    {file = "astroid-2.7.3.tar.gz", hash = "sha256:3b680ce0419b8a771aba6190139a3998d14b413852506d99aff8dc2bf65ee67c"},
+    {file = "astroid-2.8.0-py3-none-any.whl", hash = "sha256:dcc06f6165f415220013801642bd6c9808a02967070919c4b746c6864c205471"},
+    {file = "astroid-2.8.0.tar.gz", hash = "sha256:fe81f80c0b35264acb5653302ffbd935d394f1775c5e4487df745bf9c2442708"},
 ]
 atomicwrites = [
     {file = "atomicwrites-1.4.0-py2.py3-none-any.whl", hash = "sha256:6d1784dea7c0c8d4a5172b6c620f40b6e4cbfdf96d783691f2e1302a7b88e197"},
@@ -1786,12 +1759,12 @@ black = [
     {file = "black-21.9b0.tar.gz", hash = "sha256:7de4cfc7eb6b710de325712d40125689101d21d25283eed7e9998722cf10eb91"},
 ]
 boto3 = [
-    {file = "boto3-1.18.42-py3-none-any.whl", hash = "sha256:63b9846c26e0905f4e9e39d6b59f152330c53a926d693439161c43dcf9779365"},
-    {file = "boto3-1.18.42.tar.gz", hash = "sha256:a9232185d8e7e2fd2b166c0ebee5d7b1f787fdb3093f33bbf5aa932c08f0ccac"},
+    {file = "boto3-1.18.44-py3-none-any.whl", hash = "sha256:3a270f002818703d5f2eef5296c2fd8b44ef21a3f3290a716ec2202da8dd464e"},
+    {file = "boto3-1.18.44.tar.gz", hash = "sha256:8bc3211a7d7767c2c72ae9b226edb5eec5bb96989c83696832b8a5c35feb356a"},
 ]
 botocore = [
-    {file = "botocore-1.21.42-py3-none-any.whl", hash = "sha256:6de4fec4ee10987e4dea96f289553c2f45109fcaafcb74a5baee1221926e1306"},
-    {file = "botocore-1.21.42.tar.gz", hash = "sha256:0952d1200968365b440045efe8e45bbae38cf603fee12bcfc3d7b5f963cbfa18"},
+    {file = "botocore-1.21.44-py3-none-any.whl", hash = "sha256:c7640cb49c0e009bea4ad767715acbe0d305b7007235f52422bf31b5d23be8f1"},
+    {file = "botocore-1.21.44.tar.gz", hash = "sha256:2e134c9f799015e448086ed2b809fe50cc776f6600f093d1a44772288e61260f"},
 ]
 cached-property = [
     {file = "cached-property-1.5.2.tar.gz", hash = "sha256:9fa5755838eecbb2d234c3aa390bd80fbd3ac6b6869109bfc1b499f7bd89a130"},
@@ -1853,8 +1826,8 @@ chardet = [
     {file = "chardet-3.0.4.tar.gz", hash = "sha256:84ab92ed1c4d4f16916e05906b6b75a6c0fb5db821cc65e70cbd64a3e2a5eaae"},
 ]
 charset-normalizer = [
-    {file = "charset-normalizer-2.0.5.tar.gz", hash = "sha256:7098e7e862f6370a2a8d1a6398cd359815c45d12626267652c3f13dec58e2367"},
-    {file = "charset_normalizer-2.0.5-py3-none-any.whl", hash = "sha256:fa471a601dfea0f492e4f4fca035cd82155e65dc45c9b83bf4322dfab63755dd"},
+    {file = "charset-normalizer-2.0.6.tar.gz", hash = "sha256:5ec46d183433dcbd0ab716f2d7f29d8dee50505b3fdb40c6b985c7c4f5a3591f"},
+    {file = "charset_normalizer-2.0.6-py3-none-any.whl", hash = "sha256:5d209c0a931f215cee683b6445e2d77677e7e75e159f78def0db09d68fafcaa6"},
 ]
 click = [
     {file = "click-7.1.2-py2.py3-none-any.whl", hash = "sha256:dacca89f4bfadd5de3d7489b7c8a566eee0d3676333fbb50030263894c38c0dc"},
@@ -2351,12 +2324,16 @@ pillow = [
     {file = "Pillow-8.3.2-cp36-cp36m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:2f23b2d3079522fdf3c09de6517f625f7a964f916c956527bed805ac043799b8"},
     {file = "Pillow-8.3.2-cp36-cp36m-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:19ec4cfe4b961edc249b0e04b5618666c23a83bc35842dea2bfd5dfa0157f81b"},
     {file = "Pillow-8.3.2-cp36-cp36m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:e5a31c07cea5edbaeb4bdba6f2b87db7d3dc0f446f379d907e51cc70ea375629"},
+    {file = "Pillow-8.3.2-cp36-cp36m-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:15ccb81a6ffc57ea0137f9f3ac2737ffa1d11f786244d719639df17476d399a7"},
+    {file = "Pillow-8.3.2-cp36-cp36m-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:8f284dc1695caf71a74f24993b7c7473d77bc760be45f776a2c2f4e04c170550"},
     {file = "Pillow-8.3.2-cp36-cp36m-win32.whl", hash = "sha256:4abc247b31a98f29e5224f2d31ef15f86a71f79c7f4d2ac345a5d551d6393073"},
     {file = "Pillow-8.3.2-cp36-cp36m-win_amd64.whl", hash = "sha256:a048dad5ed6ad1fad338c02c609b862dfaa921fcd065d747194a6805f91f2196"},
     {file = "Pillow-8.3.2-cp37-cp37m-macosx_10_10_x86_64.whl", hash = "sha256:06d1adaa284696785375fa80a6a8eb309be722cf4ef8949518beb34487a3df71"},
     {file = "Pillow-8.3.2-cp37-cp37m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:bd24054aaf21e70a51e2a2a5ed1183560d3a69e6f9594a4bfe360a46f94eba83"},
     {file = "Pillow-8.3.2-cp37-cp37m-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:27a330bf7014ee034046db43ccbb05c766aa9e70b8d6c5260bfc38d73103b0ba"},
     {file = "Pillow-8.3.2-cp37-cp37m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:13654b521fb98abdecec105ea3fb5ba863d1548c9b58831dd5105bb3873569f1"},
+    {file = "Pillow-8.3.2-cp37-cp37m-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:a1bd983c565f92779be456ece2479840ec39d386007cd4ae83382646293d681b"},
+    {file = "Pillow-8.3.2-cp37-cp37m-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:4326ea1e2722f3dc00ed77c36d3b5354b8fb7399fb59230249ea6d59cbed90da"},
     {file = "Pillow-8.3.2-cp37-cp37m-win32.whl", hash = "sha256:085a90a99404b859a4b6c3daa42afde17cb3ad3115e44a75f0d7b4a32f06a6c9"},
     {file = "Pillow-8.3.2-cp37-cp37m-win_amd64.whl", hash = "sha256:18a07a683805d32826c09acfce44a90bf474e6a66ce482b1c7fcd3757d588df3"},
     {file = "Pillow-8.3.2-cp38-cp38-macosx_10_10_x86_64.whl", hash = "sha256:4e59e99fd680e2b8b11bbd463f3c9450ab799305d5f2bafb74fefba6ac058616"},
@@ -2364,6 +2341,8 @@ pillow = [
     {file = "Pillow-8.3.2-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:56fd98c8294f57636084f4b076b75f86c57b2a63a8410c0cd172bc93695ee979"},
     {file = "Pillow-8.3.2-cp38-cp38-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:2b11c9d310a3522b0fd3c35667914271f570576a0e387701f370eb39d45f08a4"},
     {file = "Pillow-8.3.2-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:0412516dcc9de9b0a1e0ae25a280015809de8270f134cc2c1e32c4eeb397cf30"},
+    {file = "Pillow-8.3.2-cp38-cp38-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:bcb04ff12e79b28be6c9988f275e7ab69f01cc2ba319fb3114f87817bb7c74b6"},
+    {file = "Pillow-8.3.2-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:0b9911ec70731711c3b6ebcde26caea620cbdd9dcb73c67b0730c8817f24711b"},
     {file = "Pillow-8.3.2-cp38-cp38-win32.whl", hash = "sha256:ce2e5e04bb86da6187f96d7bab3f93a7877830981b37f0287dd6479e27a10341"},
     {file = "Pillow-8.3.2-cp38-cp38-win_amd64.whl", hash = "sha256:35d27687f027ad25a8d0ef45dd5208ef044c588003cdcedf05afb00dbc5c2deb"},
     {file = "Pillow-8.3.2-cp39-cp39-macosx_10_10_x86_64.whl", hash = "sha256:04835e68ef12904bc3e1fd002b33eea0779320d4346082bd5b24bec12ad9c3e9"},
@@ -2371,12 +2350,18 @@ pillow = [
     {file = "Pillow-8.3.2-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:2cde7a4d3687f21cffdf5bb171172070bb95e02af448c4c8b2f223d783214056"},
     {file = "Pillow-8.3.2-cp39-cp39-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:1c3ff00110835bdda2b1e2b07f4a2548a39744bb7de5946dc8e95517c4fb2ca6"},
     {file = "Pillow-8.3.2-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:35d409030bf3bd05fa66fb5fdedc39c521b397f61ad04309c90444e893d05f7d"},
+    {file = "Pillow-8.3.2-cp39-cp39-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:6bff50ba9891be0a004ef48828e012babaaf7da204d81ab9be37480b9020a82b"},
+    {file = "Pillow-8.3.2-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:7dbfbc0020aa1d9bc1b0b8bcf255a7d73f4ad0336f8fd2533fcc54a4ccfb9441"},
     {file = "Pillow-8.3.2-cp39-cp39-win32.whl", hash = "sha256:963ebdc5365d748185fdb06daf2ac758116deecb2277ec5ae98139f93844bc09"},
     {file = "Pillow-8.3.2-cp39-cp39-win_amd64.whl", hash = "sha256:cc9d0dec711c914ed500f1d0d3822868760954dce98dfb0b7382a854aee55d19"},
     {file = "Pillow-8.3.2-pp36-pypy36_pp73-macosx_10_10_x86_64.whl", hash = "sha256:2c661542c6f71dfd9dc82d9d29a8386287e82813b0375b3a02983feac69ef864"},
+    {file = "Pillow-8.3.2-pp36-pypy36_pp73-manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:548794f99ff52a73a156771a0402f5e1c35285bd981046a502d7e4793e8facaa"},
+    {file = "Pillow-8.3.2-pp36-pypy36_pp73-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:8b68f565a4175e12e68ca900af8910e8fe48aaa48fd3ca853494f384e11c8bcd"},
     {file = "Pillow-8.3.2-pp36-pypy36_pp73-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:838eb85de6d9307c19c655c726f8d13b8b646f144ca6b3771fa62b711ebf7624"},
     {file = "Pillow-8.3.2-pp36-pypy36_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:feb5db446e96bfecfec078b943cc07744cc759893cef045aa8b8b6d6aaa8274e"},
     {file = "Pillow-8.3.2-pp37-pypy37_pp73-macosx_10_10_x86_64.whl", hash = "sha256:fc0db32f7223b094964e71729c0361f93db43664dd1ec86d3df217853cedda87"},
+    {file = "Pillow-8.3.2-pp37-pypy37_pp73-manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:fd4fd83aa912d7b89b4b4a1580d30e2a4242f3936882a3f433586e5ab97ed0d5"},
+    {file = "Pillow-8.3.2-pp37-pypy37_pp73-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:d0c8ebbfd439c37624db98f3877d9ed12c137cadd99dde2d2eae0dab0bbfc355"},
     {file = "Pillow-8.3.2-pp37-pypy37_pp73-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:6cb3dd7f23b044b0737317f892d399f9e2f0b3a02b22b2c692851fb8120d82c6"},
     {file = "Pillow-8.3.2-pp37-pypy37_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:a66566f8a22561fc1a88dc87606c69b84fa9ce724f99522cf922c801ec68f5c1"},
     {file = "Pillow-8.3.2-pp37-pypy37_pp73-win_amd64.whl", hash = "sha256:ce651ca46d0202c302a535d3047c55a0131a720cf554a578fc1b8a2aff0e7d96"},
@@ -2473,12 +2458,13 @@ pygments = [
     {file = "Pygments-2.10.0.tar.gz", hash = "sha256:f398865f7eb6874156579fdf36bc840a03cab64d1cde9e93d68f46a425ec52c6"},
 ]
 pylint = [
-    {file = "pylint-2.10.2-py3-none-any.whl", hash = "sha256:e178e96b6ba171f8ef51fbce9ca30931e6acbea4a155074d80cc081596c9e852"},
-    {file = "pylint-2.10.2.tar.gz", hash = "sha256:6758cce3ddbab60c52b57dcc07f0c5d779e5daf0cf50f6faacbef1d3ea62d2a1"},
+    {file = "pylint-2.11.1-py3-none-any.whl", hash = "sha256:0f358e221c45cbd4dad2a1e4b883e75d28acdcccd29d40c76eb72b307269b126"},
+    {file = "pylint-2.11.1.tar.gz", hash = "sha256:2c9843fff1a88ca0ad98a256806c82c5a8f86086e7ccbdb93297d86c3f90c436"},
 ]
 pynput-robocorp-fork = [
-    {file = "pynput-robocorp-fork-3.0.0.tar.gz", hash = "sha256:e7da30652f482d2d4e355f06e1709c943604a0b8d78c612931cdeb92c6002a9d"},
-    {file = "pynput_robocorp_fork-3.0.0-py2.py3-none-any.whl", hash = "sha256:849f82347140602273c31c0a16fff48ad57892d6ea488b2d6ceac7d24aec7ca6"},
+    {file = "pynput-robocorp-fork-4.0.0.tar.gz", hash = "sha256:92131856267268d57ca2d7861aa692eecefa0827408940091321b14606d3c04c"},
+    {file = "pynput_robocorp_fork-4.0.0-py2.py3-none-any.whl", hash = "sha256:b26719535048853d018836a242f5d300a8bcc4ba4fed19df7f9732e6d29b7282"},
+    {file = "pynput_robocorp_fork-4.0.0-py3.7.egg", hash = "sha256:3df8c7f0cac96e1e7649d882bf9ea39b0406e8e451b4b65e0bb27003e9d63b4d"},
 ]
 pyobjc-core = [
     {file = "pyobjc-core-7.3.tar.gz", hash = "sha256:5081aedf8bb40aac1a8ad95adac9e44e148a882686ded614adf46bb67fd67574"},
@@ -2503,11 +2489,6 @@ pyobjc-framework-quartz = [
     {file = "pyobjc_framework_Quartz-7.3-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:2c65456ed045dfe1711d0298734e5a3ad670f8c770f7eb3b19979256c388bdd2"},
     {file = "pyobjc_framework_Quartz-7.3-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:8ddbca6b466584c3dc0e5b701b1c2a9b5d97ddc1d79a949927499ebb1be1f210"},
     {file = "pyobjc_framework_Quartz-7.3-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:7aba3cd966a0768dd58a35680742820f0c5ac596a9cd11014e2057818e65b0af"},
-]
-pyobjc-framework-webkit = [
-    {file = "pyobjc-framework-WebKit-7.3.tar.gz", hash = "sha256:bec3a985c0f5e4263d6e28e2c551c1b5ec7b63950e0e3cb5409abdbf61f11f01"},
-    {file = "pyobjc_framework_WebKit-7.3-cp36-abi3-macosx_10_9_universal2.whl", hash = "sha256:cd388df8fde96db724a42745395998b6d5a98740fb29bac95f76884e2fa6bf27"},
-    {file = "pyobjc_framework_WebKit-7.3-cp36-abi3-macosx_10_9_x86_64.whl", hash = "sha256:89e0fcc10eb09e4203b1ace02808ae9b1882b6c8a55bbfaff20213e2a62ce974"},
 ]
 pyparsing = [
     {file = "pyparsing-2.4.7-py2.py3-none-any.whl", hash = "sha256:ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"},
@@ -2611,19 +2592,6 @@ python-xlib = [
     {file = "python-xlib-0.31.tar.gz", hash = "sha256:74d83a081f532bc07f6d7afcd6416ec38403d68f68b9b9dc9e1f28fbf2d799e9"},
     {file = "python_xlib-0.31-py2.py3-none-any.whl", hash = "sha256:1ec6ce0de73d9e6592ead666779a5732b384e5b8fb1f1886bd0a81cafa477759"},
 ]
-pythonnet = [
-    {file = "pythonnet-2.5.2-cp27-cp27m-win32.whl", hash = "sha256:d519bbc7b1cd3999651efc594d91cb67c46d1d8466dad3d83b578102e58d05bd"},
-    {file = "pythonnet-2.5.2-cp27-cp27m-win_amd64.whl", hash = "sha256:c02f53d0e61b202cddf3198fac9553d5b4ee0ea0cc4fe658c2ed69ab24def276"},
-    {file = "pythonnet-2.5.2-cp35-cp35m-win32.whl", hash = "sha256:840bdef89b378663d73f74f18895b6d8630d1f5671457a1db5ffb68179d85582"},
-    {file = "pythonnet-2.5.2-cp35-cp35m-win_amd64.whl", hash = "sha256:d8e5b27de1e2cfb69b88782ac5cdf605b1a73598a85d86570e46961126628dbb"},
-    {file = "pythonnet-2.5.2-cp36-cp36m-win32.whl", hash = "sha256:62645c29840c4a877d66e047f3e065b2e5a1a66431a99bce8d42a5af3a093ee1"},
-    {file = "pythonnet-2.5.2-cp36-cp36m-win_amd64.whl", hash = "sha256:058e536062d1585d07ec5f2cf16aefcfc8eb8179faa90e5db0063d358469d025"},
-    {file = "pythonnet-2.5.2-cp37-cp37m-win32.whl", hash = "sha256:cc77fc63e2afb0a80199ab44ced4fdfb78c19d8030063c345c80740d15380dd9"},
-    {file = "pythonnet-2.5.2-cp37-cp37m-win_amd64.whl", hash = "sha256:80c8f5c9bd10440a73eb6aedbbacb2f3dd7701b474816f5ef7636f529d838d38"},
-    {file = "pythonnet-2.5.2-cp38-cp38-win32.whl", hash = "sha256:41a607b7304e9efc6d4d8db438d6018a17c6637e8b8998848ff5c2a7a1b4687c"},
-    {file = "pythonnet-2.5.2-cp38-cp38-win_amd64.whl", hash = "sha256:00a4fed9fc05b4efbe8947c79dc0799cffbca4c89e3e068e70b6618f20c906f2"},
-    {file = "pythonnet-2.5.2.tar.gz", hash = "sha256:b7287480a1f6ae4b6fc80d775446d8af00e051ca1646b6cc3d32c5d3a461ede3"},
-]
 pytz = [
     {file = "pytz-2021.1-py2.py3-none-any.whl", hash = "sha256:eb10ce3e7736052ed3623d49975ce333bcd712c7bb19a58b9e2089d4057d0798"},
     {file = "pytz-2021.1.tar.gz", hash = "sha256:83a4a90894bf38e243cf052c8b58f381bfe9a7a483f6a9cab140bc7f702ac4da"},
@@ -2716,8 +2684,8 @@ rfc3987 = [
     {file = "rfc3987-1.3.8.tar.gz", hash = "sha256:d3c4d257a560d544e9826b38bc81db676890c79ab9d7ac92b39c7a253d5ca733"},
 ]
 robocorp-dialog = [
-    {file = "robocorp-dialog-0.2.3.tar.gz", hash = "sha256:89eeaa3a6debd175ae873c9d3f039162549e6ec7947e9c2663e87fc115fccd00"},
-    {file = "robocorp_dialog-0.2.3-py3-none-any.whl", hash = "sha256:516c8af366ec85ed10633202587867d2283014220adf1dccbcf7d930b983ba8c"},
+    {file = "robocorp-dialog-0.4.0.tar.gz", hash = "sha256:dc31dd686f132db67445097f4caed8d6a3f4c14aacf041f7fcc3ac76374f0824"},
+    {file = "robocorp_dialog-0.4.0-py3-none-any.whl", hash = "sha256:f861989cc7c0bb2c25ea9f0cbfd01b394d6b51fc78ffb9a070638fee02377f2d"},
 ]
 robotframework = [
     {file = "robotframework-4.1.1-py2.py3-none-any.whl", hash = "sha256:5a805410b7ee44dc6537a2b937e315b03c76ba178a46865cf1d649a036a44cb5"},
@@ -2755,8 +2723,8 @@ rpaframework-core = [
     {file = "rpaframework_core-6.4.0-py3-none-any.whl", hash = "sha256:3f065f552d8b729321d60cced745e680d0925bf71730949029248e203e48ff4a"},
 ]
 rpaframework-dialogs = [
-    {file = "rpaframework-dialogs-0.3.2.tar.gz", hash = "sha256:a11de43638eaebe267b1708e539f1ae0ac44512c18136102caaf4ddcf3932ab1"},
-    {file = "rpaframework_dialogs-0.3.2-py3-none-any.whl", hash = "sha256:3edc5381b82a66d327d1c1a95490740fe6492074afd232a82d82eec4f985feb6"},
+    {file = "rpaframework-dialogs-0.4.1.tar.gz", hash = "sha256:76f81ae87de6bf92f10fe4b6f644f085b61bc5cda136f61fbfa9d3655eb81962"},
+    {file = "rpaframework_dialogs-0.4.1-py3-none-any.whl", hash = "sha256:e16e6537eb142443a5545037c87dbd709690b28b4d51426a3217592eeae968ff"},
 ]
 rpaframework-pdf = [
     {file = "rpaframework-pdf-0.8.0.tar.gz", hash = "sha256:9109f945e91ec76df797b6a9da5a10721dfc12013613db949b4643d0434cf57c"},

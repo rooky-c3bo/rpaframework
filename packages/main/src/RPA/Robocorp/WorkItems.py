@@ -162,7 +162,7 @@ class RobocorpAdapter(BaseAdapter):
         url = self.process_url("work-items", parent_id, "output")
         logging.info("Creating output item: %s", url)
 
-        data = json_dumps({"payload": payload})
+        data = json_dumps({"payload": payload}).encode("utf-8")
         response = requests.post(url, headers=self.process_headers, data=data)
         self.handle_error(response)
 
@@ -188,7 +188,7 @@ class RobocorpAdapter(BaseAdapter):
         url = self.workitem_url(item_id, "data")
         logging.info("Saving work item payload: %s", url)
 
-        data = json_dumps(payload)
+        data = json_dumps(payload).encode("utf-8")
         response = requests.put(url, headers=self.workitem_headers, data=data)
         self.handle_error(response)
 
@@ -701,6 +701,28 @@ class WorkItems:
     argument for the library, or the ``RPA_WORKITEMS_ADAPTER`` environment
     variable. The library has a built-in alternative adapter called FileAdapter for
     storing work items to disk.
+
+    The FileAdapter uses a local JSON file for input work items.
+    It's a list of work items, each of which has a data payload and files.
+
+    An example of a local file with one work item:
+
+    .. code-block:: json
+
+        [
+            {
+                "payload": {
+                    "variable1": "a-string-value",
+                    "variable2": ["a", "list", "value"]
+                },
+                "files": {
+                    "file1": "path/to/file.ext"
+                }
+            }
+        ]
+
+    Output work items (if any) are saved to an adjacent file
+    with the same name, but with the extension ``.output.json``.
 
     **Examples**
 
