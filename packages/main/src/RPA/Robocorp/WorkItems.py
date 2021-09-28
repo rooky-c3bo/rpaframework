@@ -375,7 +375,7 @@ class FileAdapter(BaseAdapter):
 
     def release_input(self, item_id: str, state: State):
         # TODO: Define what happens with items in file, nothing?
-        raise NotImplementedError
+        pass
 
     def create_output(self, parent_id: str, payload: Optional[JSONType] = None) -> str:
         del parent_id
@@ -1302,3 +1302,19 @@ class WorkItems:
 
         logging.info("Removed %d file(s)", len(names))
         return names
+
+    @keyword
+    def for_each_input_work_item(self, keyword, *args, **kwargs):
+        """Run a keyword for each work item in the input queue."""
+        outputs = []
+
+        while True:
+            output = BuiltIn().run_keyword(keyword, *args, **kwargs)
+            outputs.append(output)
+
+            try:
+                self.get_input_work_item()
+            except EmptyQueue:
+                break
+
+        return outputs
