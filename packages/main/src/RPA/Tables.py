@@ -1676,7 +1676,7 @@ class Tables:
 
         self.logger.info("Filtered %d rows", after - before)
 
-    def map_column_values(self, table: Table, column: Column, keyword: str, **kwargs):
+    def map_column_values(self, table: Table, column: Column, name: str, **kwargs):
         """Run a keyword for each cell in a given column, and replace
         its contents with the return value.
 
@@ -1684,7 +1684,7 @@ class Tables:
 
         :param table:     Table to modify
         :param column:    Column to modify
-        :param keyword:   Mapping keyword
+        :param name:      Mapping keyword name
         :param kwargs:    Additional keyword arguments (optional)
 
         The cell value will be given as the first argument to the
@@ -1694,18 +1694,18 @@ class Tables:
 
         .. code-block:: robotframework
 
-            # Convert all prices to integers
+            # Convert all columns values to a different type
             Map column values    ${table}    Price    Convert to integer
 
-            # Look up actual users with a custom keyword
-            Map column values    ${table}    User     Find user name
+            # Look up values with a custom keyword
+            Map column values    ${table}    User     Map user ID to name
         """
         self._requires_table(table)
 
         values = []
         for index in table.index:
             cell = table.get_cell(index, column)
-            output = BuiltIn().run_keyword(keyword, cell, **kwargs)
+            output = BuiltIn().run_keyword(name, cell, **kwargs)
             values.append(output)
 
         table.set_column(column, values)

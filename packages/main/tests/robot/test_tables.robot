@@ -66,8 +66,6 @@ Map Column Values
     Assert cell value    ${table}    0     User     Teppo
     Assert cell value    ${table}    2     User     Cosmin
 
-
-
 *** Keywords ***
 List group IDs
     [Arguments]    ${rows}
