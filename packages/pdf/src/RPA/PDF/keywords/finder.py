@@ -139,7 +139,7 @@ class FinderKeywords(LibraryContext):
             pdf = PDF()
 
             def example_keyword():
-                ${matches} = pdf.find_text("Invoice Number")
+                matches = pdf.find_text("Invoice Number")
         """
         pagenum = int(pagenum)
         if closest_neighbours is not None:
